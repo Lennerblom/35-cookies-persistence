@@ -10,7 +10,7 @@ import Mongoose, {Schema} from 'mongoose'
 
 // SCHEMA
 const userSchema =  new Schema({
-  email: {type: String, required: true, unique: true},
+  email: {type: String, required: false, unique: true},
   username: {type: String, required: true, unique: true},
   passwordHash: {type: String, required: true},
   randomHash: {type: String,  unique: true, default: ''},
@@ -20,22 +20,22 @@ const userSchema =  new Schema({
 // INSTANCE METHODS
 userSchema.methods.passwordCompare = function(password){
   return bcrypt.compare(password, this.passwordHash)
-  .then(success => {
-    if (!success)
-      throw createError(401, 'AUTH ERROR: wrong password')
-    return this
-  })
+    .then(success => {
+      if (!success)
+        throw createError(401, 'AUTH ERROR: wrong password')
+      return this
+    })
 }
 
 userSchema.methods.tokenCreate  = function(){
   this.randomHash = randomBytes(32).toString('base64')
   return this.save()
-  .then(user => {
-    return jwt.sign({randomHash: this.randomHash}, process.env.SECRET)
-  })
-  .then(token => {
-    return token
-  })
+    .then(user => {
+      return jwt.sign({randomHash: this.randomHash}, process.env.SECRET)
+    })
+    .then(token => {
+      return token
+    })
 }
 
 // MODEL
@@ -51,10 +51,10 @@ User.create = function (user) {
   user = Object.assign({}, user, {password: undefined})
 
   return bcrypt.hash(password, 1)
-  .then(passwordHash => {
-    let data = Object.assign({}, user, {passwordHash}) 
-    return new User(data).save()
-  })
+    .then(passwordHash => {
+      let data = Object.assign({}, user, {passwordHash}) 
+      return new User(data).save()
+    })
 }
 
 // INTERFACE

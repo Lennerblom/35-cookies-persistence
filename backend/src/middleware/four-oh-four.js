@@ -1,5 +1,5 @@
 // DEPENDENCIES
-import createError from 'http-errors'
+import createError from 'http-errors';
 
 // INTERFACE
 export default (req, res, next) => 

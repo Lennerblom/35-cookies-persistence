@@ -1,8 +1,9 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import logger from '../middleware/logger';
-import category from '../reducer/category';
-import expense from '../reducer/expense-duck';
+import thunk from 'redux-thunk';
 
-const appReducer = combineReducers({category, expense});
+import authRed from '../reducer/auth.js';
 
-export default () => createStore(appReducer, applyMiddleware(logger));
+const appReducer = combineReducers({authState: authRed});
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+export default () => createStore(appReducer, composeEnhancers(applyMiddleware(thunk, logger)));
