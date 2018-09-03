@@ -24,6 +24,7 @@ export function userLogin(user) {
     return superagent.get(`${API_URL}/login`)
       .auth(user.username, user.password)
       .then(res => {
+        localStorage.setItem('token', res.text);
         const token = res.text;
         const action = tokenSet(token);
         dispatch(action);
@@ -31,6 +32,20 @@ export function userLogin(user) {
       });
   };
     
+}
+export function userSignUp(user) {
+  return dispatch => {
+    return superagent.post(`${API_URL}/signup`)
+      .send(user)
+      .then(res => {
+        localStorage.setItem('token', res.text);
+        const token = res.text;
+        const action = tokenSet(token);
+        dispatch(action);
+        return res;
+      });
+  };
+      
 }
 
 export const tokenSet = (token) => ({

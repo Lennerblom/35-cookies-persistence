@@ -4,7 +4,7 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import createStore from '../../lib/store';
 import Dashboard from '../dashboard';
 import Landing from '../landing';
-
+import SignUp from '../signup';
 const store = createStore();
 //console.log('state LOG: ', store.getState())
 
@@ -16,8 +16,9 @@ export default class App extends Component {
               <Provider store={store}>
                 <BrowserRouter>
                     <Fragment>
-                      <Route exact path="/login" component={Landing}/>
+                      <Route exact path="/" component={Landing}/>
                       <Route exact path="/dashboard" component={Dashboard}/>
+                      <Route exact path="/signup" component={SignUp}/>
                     </Fragment>
                 </BrowserRouter>
               </Provider>

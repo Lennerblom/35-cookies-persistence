@@ -8,6 +8,7 @@ import {log, daysToMilliseconds} from '../lib/util.js';
 
 export default new Router()
   .post('/signup', parserBody, (req, res, next) => {
+    console.log('hello');
     log('__ROUTE__ POST /signup');
     new User.create(req.body)
       .then(user => user.tokenCreate())
